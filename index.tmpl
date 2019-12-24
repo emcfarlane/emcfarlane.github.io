@@ -7,13 +7,13 @@
 <header>
 </header>
 <main>
-
+{{range $index, $post := .Posts}}
 	<article>
-		<a href="posts/hello.md">
-			<h2>posts/hello.md</h2>
+		<a href="{{.Title}}">
+			<h2>{{.Title}}</h2>
 		</a>
 	</article>
-
+{{end}}
 </main>
 <footer>
 </footer>
