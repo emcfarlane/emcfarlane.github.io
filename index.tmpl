@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<link rel="stylesheet" href="style.css">
-</head>
+{{template "head" .}}
 <body>
-<header>
-</header>
-<main>
-{{range $index, $post := .Posts}}
-	<article>
-		<a href="{{.Title}}">
-			<h2>{{.Title}}</h2>
-		</a>
-	</article>
-{{end}}
-</main>
-<footer>
-</footer>
+  <header>
+    <h1>{{.Title}}</h1>
+  </header>
+  <main>
+  {{range $index, $post := .Posts}}
+    <article>
+      <a href="{{.Dst}}">
+        <h2>{{.Title}}</h2>
+        <div>{{.Description}}</div>
+      </a>
+    </article>
+  {{end}}
+  </main>
+  <footer>
+  </footer>
 </body>
 </html>

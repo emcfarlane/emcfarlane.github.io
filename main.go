@@ -5,11 +5,18 @@ import (
 	"fmt"
 	"html/template"
 	"io"
+	"io/ioutil"
 	"log"
+	"mime"
+	"net"
 	"net/http"
 	"os"
+	"path"
 	"path/filepath"
 	"strings"
+	"time"
+
+	blackfriday "gopkg.in/russross/blackfriday.v2"
 )
 
 var (
@@ -25,71 +32,145 @@ func (g generator) createTemplates() (*template.Template, error) {
 }
 
 type item struct {
-	Title string
+	Title       string
+	Description string
+	Src, Dst    string
+	ModeTime    time.Time
 }
 
 type index struct {
+	Title string
 	Posts []item
+}
+
+type post struct {
+	Markdown template.HTML
 }
 
 func (g *generator) listPostfiles() ([]string, error) {
 	return filepath.Glob("posts/*.md")
 }
 
-// Open implements http.Fileserver
-//func (g *generator) Open(name string) (http.File, error) {
-func (g *generator) serveHTTP(w http.ResponseWriter, r *http.Request) error {
-	name := r.URL.Path
-	fmt.Println("NAME", name)
+type httpError struct {
+	msg  string
+	code int
+}
 
-	var target string
-	switch name {
-	case "/", "/index.html":
-		target = "index.html"
-	default:
-		fmt.Println("NOT EXIST")
-		return os.ErrNotExist
-	}
-	fmt.Println("HERE", target)
+func (e httpError) Error() string { return fmt.Sprintf("%s %d", e.msg, e.code) }
 
-	tmpls, err := g.createTemplates()
-	if err != nil {
-		return err
-	}
+func (g *generator) genIndex() (*os.File, error) {
+	const target = "index.html"
 
 	postfiles, err := g.listPostfiles()
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	var posts []item
 	for _, p := range postfiles {
+		fi, err := os.Stat(p)
+		if err != nil {
+			return nil, err
+		}
+
 		posts = append(posts, item{
-			Title: p,
+			Title:    p,
+			Src:      p,
+			Dst:      strings.Replace(p, ".md", ".html", 1),
+			ModeTime: fi.ModTime(),
 		})
 	}
 
 	index := index{
+		Title: "Blog Edward McFarlane",
 		Posts: posts,
 	}
 
 	f, err := os.Create(target)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	defer f.Close()
+
+	tmpls, err := g.createTemplates()
+	if err != nil {
+		return nil, err
+	}
 
 	if err := tmpls.ExecuteTemplate(f, "index.tmpl", index); err != nil {
-		return err
+		return nil, err
 	}
 
 	fmt.Println("wrote", f.Name())
 	//return os.Open(name)
 	if _, err := f.Seek(0, io.SeekStart); err != nil {
+		return nil, err
+	}
+	return f, nil
+
+}
+
+func (g *generator) genMD(src, dst string) (*os.File, error) {
+	fmt.Printf("%s -> %s\n", src, dst)
+
+	input, err := ioutil.ReadFile(src)
+	if err != nil {
+		return nil, err
+	}
+
+	output := blackfriday.Run(input)
+
+	f, err := os.Create(dst)
+	if err != nil {
+		return nil, err
+	}
+
+	post := post{
+		Markdown: template.HTML(output),
+	}
+
+	tmpls, err := g.createTemplates()
+	if err != nil {
+		return nil, err
+	}
+
+	if err := tmpls.ExecuteTemplate(f, "post.tmpl", post); err != nil {
+		return nil, err
+	}
+
+	if _, err := f.Seek(0, io.SeekStart); err != nil {
+		return nil, err
+	}
+	return f, nil
+}
+
+func (g *generator) mux(name string) (*os.File, error) {
+	switch {
+	case name == "", name == "/", name == "/index.html":
+		return g.genIndex()
+
+	case filepath.Ext(name) == ".html":
+		dst := filepath.Join("./", path.Clean("/"+name))
+		src := dst[:len(dst)-len(".html")] + ".md"
+		return g.genMD(src, dst)
+
+	default:
+		dst := filepath.Join("./", path.Clean("/"+name))
+		return os.Open(dst)
+	}
+}
+
+// Open implements http.Fileserver
+//func (g *generator) Open(name string) (http.File, error) {
+func (g *generator) serveHTTP(w http.ResponseWriter, r *http.Request) error {
+	name := r.URL.Path
+
+	f, err := g.mux(name)
+	if err != nil {
 		return err
 	}
-	//f.Close()
-	//return os.Open(target)
+	defer f.Close()
+
+	w.Header().Set("Content-Type", mime.TypeByExtension(filepath.Ext(f.Name())))
 	if _, err := io.Copy(w, f); err != nil {
 		return err
 	}
@@ -102,19 +183,19 @@ func (g *generator) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		upath = "/" + upath
 		r.URL.Path = upath
 	}
+
+	log.Printf("%s %s\n", r.Method, upath)
 	if err := g.serveHTTP(w, r); err != nil {
 		var (
 			msg  string
 			code int
 		)
 
-		switch {
-		case os.IsNotExist(err):
-			msg, code = "404 page not found", http.StatusNotFound
-		case os.IsPermission(err):
-			msg, code = "403 Forbidden", http.StatusForbidden
+		switch v := err.(type) {
+		case httpError:
+			msg, code = v.msg, v.code
 		default:
-			msg, code = fmt.Sprintf("500 Internal Server Error: %s", err), http.StatusInternalServerError
+			msg, code = fmt.Sprintf("internal server error: %s", err), http.StatusInternalServerError
 		}
 		http.Error(w, msg, code)
 		log.Println(err)
@@ -123,11 +204,19 @@ func (g *generator) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func run() error {
+	//mux := http.NewServeMux()
 	addr := *addr
 	hdlr := &generator{}
-	//hdlr := http.FileServer(fs)
 
-	return http.ListenAndServe(addr, hdlr)
+	//mux.Handle("/",
+
+	l, err := net.Listen("tcp", addr)
+	if err != nil {
+		return err
+	}
+
+	log.Printf("serving %s", addr)
+	return http.Serve(l, hdlr)
 }
 
 func main() {
