@@ -35,7 +35,7 @@ type item struct {
 	Title       string
 	Description string
 	Src, Dst    string
-	ModeTime    time.Time
+	ModTime     time.Time
 }
 
 type index struct {
@@ -73,11 +73,46 @@ func (g *generator) genIndex() (*os.File, error) {
 			return nil, err
 		}
 
+		// TODO: better ast parsing...
+		input, err := ioutil.ReadFile("posts/" + fi.Name())
+		if err != nil {
+			return nil, err
+		}
+
+		r := blackfriday.NewHTMLRenderer(
+			blackfriday.HTMLRendererParameters{
+				Flags: blackfriday.CommonHTMLFlags,
+			},
+		)
+		parser := blackfriday.New(
+			blackfriday.WithRenderer(r),
+			blackfriday.WithExtensions(blackfriday.CommonExtensions),
+		)
+		ast := parser.Parse(input)
+
+		var title, desc string
+		var isHeading, isParagraph bool
+		ast.Walk(func(node *blackfriday.Node, entering bool) blackfriday.WalkStatus {
+			isHeading = entering && node.Type == blackfriday.Heading && title == "" || isHeading
+			isParagraph = entering && node.Type == blackfriday.Paragraph && desc == "" || isParagraph
+
+			if isHeading && node.Type == blackfriday.Text {
+				title = string(node.Literal)
+				isHeading = false
+			}
+			if isParagraph && node.Type == blackfriday.Text {
+				desc = string(node.Literal)
+				isParagraph = false
+			}
+			return blackfriday.GoToNext
+		})
+
 		posts = append(posts, item{
-			Title:    p,
-			Src:      p,
-			Dst:      strings.Replace(p, ".md", ".html", 1),
-			ModeTime: fi.ModTime(),
+			Title:       title,
+			Description: desc,
+			Src:         p,
+			Dst:         strings.Replace(p, ".md", ".html", 1),
+			ModTime:     fi.ModTime(),
 		})
 	}
 
@@ -159,8 +194,7 @@ func (g *generator) mux(name string) (*os.File, error) {
 	}
 }
 
-// Open implements http.Fileserver
-//func (g *generator) Open(name string) (http.File, error) {
+// serveHTTP implements a simple fileserver.
 func (g *generator) serveHTTP(w http.ResponseWriter, r *http.Request) error {
 	name := r.URL.Path
 

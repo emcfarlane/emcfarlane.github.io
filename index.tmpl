@@ -2,20 +2,19 @@
 <html>
 {{template "head" .}}
 <body>
+  {{template "nav" .}}
   <header>
     <h1>{{.Title}}</h1>
   </header>
   <main>
-  {{range $index, $post := .Posts}}
-    <article>
+  {{range $index, $post := .Posts}}<article>
       <a href="{{.Dst}}">
         <h2>{{.Title}}</h2>
-        <div>{{.Description}}</div>
+        <p>{{.Description}}</p>
+        <p>{{.ModTime.Format "Jan 02, 2006"}}</p>
       </a>
-    </article>
-  {{end}}
+    </article>{{end}}
   </main>
-  <footer>
-  </footer>
+  {{template "footer" .}}
 </body>
 </html>
