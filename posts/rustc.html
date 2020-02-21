@@ -3,10 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Blog Edward McFarlane</title>
+  <title></title>
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+</body>
   <nav>
     <div></div>
     <div class="social">
@@ -16,30 +17,34 @@
       <a href="https://www.linkedin.com/in/edward-mcfarlane-b5493375/" class="logo linkedin"></a>
     </div>
   </nav>
-  <header>
-    <h1>Blog Edward McFarlane</h1>
-  </header>
-  <main>
-    <article>
-      <a href="posts/rustc.html">
-        <h2>[WIP] Rust on Beaglebone Blue</h2>
-        <p>Generate c bindings to </p>
-        <p>Feb 21, 2020</p>
-      </a>
-    </article><article>
-      <a href="posts/hello.html">
-        <h2>Hello, world!</h2>
-        <p>Simple blog generation with markdown.</p>
-        <p>Feb 21, 2020</p>
-      </a>
-    </article><article>
-      <a href="posts/books.html">
-        <h2>Books!</h2>
-        <p>My list of books to read!</p>
-        <p>Feb 21, 2020</p>
-      </a>
-    </article>
-  </main>
+  <h1>[WIP] Rust on Beaglebone Blue</h1>
+
+<p>Generate c bindings to <a href="https://github.com/StrawsonDesign/librobotcontrol">robotics lib</a>.</p>
+
+<h4>filelayout</h4>
+
+<pre><code>.
+├── build.rs
+├── librobotcontrol.a
+├── src
+│   ├── main.rs
+.
+</code></pre>
+
+<pre><code>// build.rs
+use std::env;
+use std::path::Path;
+
+fn main() {
+    let dir = env::var(&quot;CARGO_MANIFEST_DIR&quot;).unwrap();
+    println!(&quot;cargo:rustc-link-lib=static=robotcontrol&quot;);
+    println!(
+        &quot;cargo:rustc-link-search=native={}&quot;,
+        Path::new(&amp;dir).display()
+    );
+}
+</code></pre>
+
   <footer>
     <div>By Edward McFarlane<div>
   </footer>

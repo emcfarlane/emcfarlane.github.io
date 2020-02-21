@@ -13,6 +13,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"sort"
 	"strings"
 	"time"
 
@@ -37,6 +38,12 @@ type item struct {
 	Src, Dst    string
 	ModTime     time.Time
 }
+
+type byModTime []item
+
+func (a byModTime) Len() int           { return len(a) }
+func (a byModTime) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
+func (a byModTime) Less(i, j int) bool { return a[i].ModTime.After(a[j].ModTime) }
 
 type index struct {
 	Title string
@@ -115,6 +122,8 @@ func (g *generator) genIndex() (*os.File, error) {
 			ModTime:     fi.ModTime(),
 		})
 	}
+
+	sort.Sort(byModTime(posts))
 
 	index := index{
 		Title: "Blog Edward McFarlane",

@@ -7,7 +7,7 @@
     <h1>{{.Title}}</h1>
   </header>
   <main>
-  {{range $index, $post := .Posts}}<article>
+    {{range $index, $post := .Posts}}<article>
       <a href="{{.Dst}}">
         <h2>{{.Title}}</h2>
         <p>{{.Description}}</p>
