@@ -24,9 +24,7 @@ var (
 	addr = flag.String("addr", "0.0.0.0:8080", "Server address")
 )
 
-type generator struct {
-	//tmpl *template.Template
-}
+type generator struct{}
 
 func (g generator) createTemplates() (*template.Template, error) {
 	return template.ParseGlob("*.tmpl")

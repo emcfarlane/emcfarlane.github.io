@@ -9,7 +9,9 @@
 <body>
 </body>
   <nav>
-    <div></div>
+    <div>
+      <a href="/">home</a>
+    </div>
     <div class="social">
       <a href="https://github.com/afking" class="logo github"></a>
       <a href="https://www.instagram.com/edwardmcfarlane/" class="logo instagram"></a>
@@ -17,21 +19,60 @@
       <a href="https://www.linkedin.com/in/edward-mcfarlane-b5493375/" class="logo linkedin"></a>
     </div>
   </nav>
-  <h1>[WIP] Rust on Beaglebone Blue</h1>
+  <h1>Rust on a Beaglebone Blue</h1>
 
-<p>Generate c bindings to <a href="https://github.com/StrawsonDesign/librobotcontrol">robotics lib</a>.</p>
+<p>Beaglebone Blue is an all-in-one linux computer for robotics. Based on the Beaglebone Black with specific integrations for robotics its the perfect dev board. In this post we wrap the extensive C libraries available to make them callable from Rust.</p>
 
-<h4>filelayout</h4>
+<p><img src="rustc/beaglebone.png" alt="Beaglebone Blue" /></p>
+
+<h2>Generate C Bindings</h2>
+
+<p>We need to generate C bindings to <a href="https://github.com/StrawsonDesign/librobotcontrol">librobotcontrol</a>.
+Thankfully Rust has fantastic tooling to autogenerate FFI C bindings with <a href="https://github.com/rust-lang/rust-bindgen">rust-bindgen</a>.
+However we are <em>not</em> going to use the library feature as that requires the C libraries to be present at build. Instead we will generate the binding file ahead of time an statically link against the compiled C lib.</p>
+
+<p>Boot up the beaglebone blue and login to a shell (<code>mosh debian@beaglebone.local</code>).
+Install <a href="https://rust-lang.github.io/rust-bindgen/command-line-usage.html">bindgen</a>.
+Git clone <a href="https://github.com/StrawsonDesign/librobotcontrol">librobotcontrol</a>, running the following:</p>
+
+<pre><code class="language-sh">$ git clone git@github.com:StrawsonDesign/librobotcontrol.git
+$ cd librobotcontrol
+$ bindgen include/robotcontrol.h -o bindings.rs -- -Iinclude/
+</code></pre>
+
+<p>If successful we now have a new file <code>bindings.rs</code>!</p>
+
+<p>Now we have bindings lets create the library to link against. Compilation is easy and all setup with the default Beaglebone Blue distribution. Compile with <code>make</code>. Then create an archive with <code>ar</code>:</p>
+
+<pre><code class="language-sh">$ make
+$ ar rcs librobotcontrol.a build/**.o
+</code></pre>
+
+<p><em>NB: librobotcontrol is already complied in your Beaglebone distribution</em></p>
+
+<p>Copy these files back to your main computer and lets move on to compiling our Rust program against this.</p>
+
+<h2>Linking</h2>
+
+<p>To compile our C libraries in rust we will need a <a href="https://doc.rust-lang.org/cargo/reference/build-scripts.html">build script</a>.
+Placing the file <code>build.rs</code> in the root of a package will cause Cargo to compile the script and execute it just before building.</p>
+
+<p>With a file layout:</p>
 
 <pre><code>.
 ├── build.rs
 ├── librobotcontrol.a
 ├── src
 │   ├── main.rs
-.
+│   ├── bindings.rs
+.   .
 </code></pre>
 
-<pre><code>// build.rs
+<p>Where <code>bindings.rs</code> and <code>librobotcontrol.a</code> were generated on the Beaglebone Blue.</p>
+
+<p>The build script provides the static link:</p>
+
+<pre><code class="language-rust">// build.rs
 use std::env;
 use std::path::Path;
 
@@ -44,6 +85,113 @@ fn main() {
     );
 }
 </code></pre>
+
+<p>In <code>main.rs</code> we can now include our new bindings:</p>
+
+<pre><code class="language-rust">// main.rs
+#![allow(non_upper_case_globals)]
+#![allow(non_camel_case_types)]
+#![allow(non_snake_case)]
+include!(&quot;bindings.rs&quot;);
+
+
+#[cfg(all(target_os = &quot;linux&quot;))]
+fn main() {
+    let c_str = unsafe {
+        let s = rc_version_string();
+        assert!(!s.is_null());
+
+        CStr::from_ptr(s)
+    };
+
+    let r_str = c_str.to_str().unwrap();
+    println!(&quot;Success version: {}!&quot;, r_str);
+}
+
+#[cfg(any(not(target_os = &quot;linux&quot;)))]
+fn main() {
+    println!(r#&quot;Invalid compile target!&quot;#);
+}
+</code></pre>
+
+<h2>Cross Compile</h2>
+
+<p>Our build target is the AM335x 1GHz ARM® Cortex-A8. To easily compile natively the Rust tools team provides <a href="https://github.com/rust-embedded/cross">cross</a>. This encapsulates the required environment in docker making cross compilation easy. Install cross and build with:</p>
+
+<pre><code>$ cross build --target armv7-unknown-linux-gnueabihf
+</code></pre>
+
+<h2>Calling back to Rust from C</h2>
+
+<p>A core part of the Robotics feature is the IMU_MPU wich includes accelerometers, gyros and barometers. The provided C library has a callback function with the following C signature:</p>
+
+<pre><code class="language-c">int rc_mpu_set_dmp_callback(void(*)(void) func)
+</code></pre>
+
+<p>In Rust, bingen translates this to:</p>
+
+<pre><code class="language-rust">extern &quot;C&quot; {
+    pub fn rc_mpu_set_dmp_callback(
+        func: ::std::option::Option&lt;unsafe extern &quot;C&quot; fn()&gt;,
+    ) -&gt; ::std::os::raw::c_int;
+}
+</code></pre>
+
+<p>To call back into Rust from C code we need to provide a function which compiles to C&rsquo;s ABI. Unfortunately closures aren&rsquo;t able to provide this without a <a href="https://blog.seantheprogrammer.com/neat-rust-tricks-passing-rust-closures-to-c">trampoline function</a>. However, the provided C API doesn&rsquo;t allow this trampolining as the arguments aren&rsquo;t passed in the callback. We therefore resort to using global state, breaking the Rust thread safety guarantees. Each function that touches this memory will need to be wrapped in unsafe.</p>
+
+<pre><code class="language-rust">static mut mpu_data: rc_mpu_data_t = rc_mpu_data_t {
+    accel: [0.0; 3usize],
+    gyro: [0.0; 3usize],
+    mag: [0.0; 3usize],
+    temp: 0.0,
+    ...
+};
+
+unsafe extern &quot;C&quot; fn mpu_callback() {
+    // Read access is only safe in this function.
+    println!(&quot;Acceleration: {}!&quot;, mpu_data.accel);
+}
+</code></pre>
+
+<p>Where the function can be registered with:</p>
+
+<pre><code class="language-rust">    unsafe { rc_mpu_set_dmp_callback(Some(mpu_callback)) };
+</code></pre>
+
+<h2>Monitoring</h2>
+
+<p>As a quick demonstration we can expose these metrics via Promethues. Create a GuageVec for acceleration. On each callback update the guage parameters for all 3 dimensions x, y and z:</p>
+
+<pre><code class="language-rust">lazy_static! {
+    static ref ACCELERATION: GaugeVec =
+        register_gauge_vec!(&quot;acceleration&quot;, &quot;Acceleration in m/s^2&quot;, &amp;[&quot;dimension&quot;]).unwrap();
+}
+
+unsafe extern &quot;C&quot; fn mpu_callback() {
+    ACCELERATION
+        .with_label_values(&amp;[&quot;x&quot;])
+        .set(mpu_data.accel[0]);
+    ACCELERATION
+        .with_label_values(&amp;[&quot;y&quot;])
+        .set(mpu_data.accel[1]);
+    ACCELERATION
+        .with_label_values(&amp;[&quot;z&quot;])
+        .set(mpu_data.accel[2]);
+}
+</code></pre>
+
+<p><em>NB: MPU acceleration values should be filtered.</em></p>
+
+<pre><code># HELP acceleration Acceleration in m/s^2
+# TYPE acceleration gauge
+acceleration{dimension=&quot;x&quot;} 8.169016064453125
+acceleration{dimension=&quot;y&quot;} -0.3399766357421875
+acceleration{dimension=&quot;z&quot;} 5.616797094726562
+</code></pre>
+
+<p><img src="rustc/grafana.png" alt="Grafana image" /></p>
+
+<p>We now have our Rust program wrapping an ARM C library enabling easy access to all Beaglebone Blues peripherals!</p>
 
   <footer>
     <div>By Edward McFarlane<div>
