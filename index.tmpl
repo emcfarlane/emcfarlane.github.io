@@ -10,9 +10,9 @@
     {{range $index, $post := .Posts}}<article>
       <a href="{{.Dst}}">
         <h2>{{.Title}}</h2>
-        <p>{{.Description}}</p>
-        <p>{{.ModTime.Format "Jan 02, 2006"}}</p>
       </a>
+      <p>{{.Description}}</p>
+      <p>{{.ModTime.Format "Jan 02, 2006"}}</p>
     </article>{{end}}
   </main>
   {{template "footer" .}}
