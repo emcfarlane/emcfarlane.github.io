@@ -1,8 +1,18 @@
 Hello, world!
 =============
 
-Simple static site generation from markdown.
+Static site generation.
+
+### Development
 
 ```
-go run .
+$ yarn
+$ yarn start
+$ yarn build
+```
+
+### Deployment
+
+```
+$ GIT_USER=afking USE_SSH=true yarn deploy
 ```
