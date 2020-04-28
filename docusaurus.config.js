@@ -47,7 +47,7 @@ module.exports = {
       {
         blog: {
           path: "blog",
-          routeBasePath: "", // TODO: fix
+          routeBasePath: "/",
           showReadingTime: true,
           editUrl: "https://github.com/afking/afking.github.io/edit/master/",
         },
