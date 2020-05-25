@@ -24,6 +24,11 @@
     padding: 0 var(--ifm-pre-padding);
 }
 
+.footer {
+    background-color: transparent;
+    font-size: 0.8rem;
+}
+
 .header-logo:before {
     content: '';
     width: 24px;

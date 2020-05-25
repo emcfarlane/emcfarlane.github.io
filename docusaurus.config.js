@@ -38,7 +38,7 @@ module.exports = {
     },
     footer: {
       style: "light",
-      copyright: `Copyright © ${new Date().getFullYear()} Edward McFarlane. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Edward McFarlane.`,
     },
   },
   presets: [
@@ -49,7 +49,8 @@ module.exports = {
           path: "blog",
           routeBasePath: "/",
           showReadingTime: true,
-          editUrl: "https://github.com/emcfarlane/emcfarlane.github.io/edit/master/",
+          editUrl:
+            "https://github.com/emcfarlane/emcfarlane.github.io/edit/master/",
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
