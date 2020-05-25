@@ -1,11 +1,11 @@
 module.exports = {
   title: "Edward McFarlane",
   tagline: "Blog",
-  url: "https://afking.github.io",
+  url: "https://emcfarlane.github.io",
   baseUrl: "/",
   favicon: "img/favicon.ico",
-  organizationName: "afking", // Usually your GitHub org/user name.
-  projectName: "afking.github.io", // Usually your repo name.
+  organizationName: "emcfarlane", // Usually your GitHub org/user name.
+  projectName: "emcfarlane.github.io", // Usually your repo name.
   themeConfig: {
     navbar: {
       title: "Edward McFarlane",
@@ -30,7 +30,7 @@ module.exports = {
           className: ["header-instagram", "header-logo"],
         },
         {
-          href: "https://github.com/afking",
+          href: "https://github.com/emcfarlane",
           position: "right",
           className: ["header-github", "header-logo"],
         },
@@ -49,7 +49,7 @@ module.exports = {
           path: "blog",
           routeBasePath: "/",
           showReadingTime: true,
-          editUrl: "https://github.com/afking/afking.github.io/edit/master/",
+          editUrl: "https://github.com/emcfarlane/emcfarlane.github.io/edit/master/",
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),

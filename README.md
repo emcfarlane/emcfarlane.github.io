@@ -14,5 +14,5 @@ $ yarn build
 ### Deployment
 
 ```
-$ GIT_USER=afking USE_SSH=true yarn deploy
+$ GIT_USER=emcfarlane USE_SSH=true yarn deploy
 ```
