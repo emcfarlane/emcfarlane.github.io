@@ -29,6 +29,11 @@
     font-size: 0.8rem;
 }
 
+.navbar {
+    border-bottom: 1px solid var(--ifm-color-emphasis-300);
+    box-shadow: none;
+}
+
 .header-logo:before {
     content: '';
     width: 24px;
