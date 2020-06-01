@@ -30,6 +30,7 @@
 }
 
 .navbar {
+    backdrop-filter: saturate(180%) blur(5px);
     border-bottom: 1px solid var(--ifm-color-emphasis-300);
     box-shadow: none;
 }
