@@ -20,7 +20,7 @@ export default function (props) {
       }}
       className={clsx(
         className,
-        "navbar__item",
+        "navbar__link",
         "header-sunmoon",
         "header-logo"
       )}
