@@ -15,6 +15,8 @@
     --ifm-color-primary-lighter: rgb(0, 122, 255);
     --ifm-color-primary-lightest: rgb(0, 122, 255);
     --ifm-code-font-size: 95%;
+    /*--ifm-background-color: #f3f6fa;*/
+    /*--ifm-font-color-base: #3d424e;*/
 }
 
 .docusaurus-highlight-code-line {
@@ -33,6 +35,18 @@
     backdrop-filter: saturate(180%) blur(5px);
     border-bottom: 1px solid var(--ifm-color-emphasis-300);
     box-shadow: none;
+}
+
+h2>a {
+    color: inherit;
+}
+
+h2>a:hover {
+    color: inherit;
+}
+
+.header-logo {
+    cursor: pointer;
 }
 
 .header-logo:before {
@@ -76,4 +90,12 @@ html[data-theme='dark'] .header-twitter:before {
 
 html[data-theme='dark'] .header-linkedin:before {
     background-image: url("data:image/svg+xml,%3Csvg role='img' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3ELinkedIn icon%3C/title%3E%3Cpath fill='white' d='M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z'/%3E%3C/svg%3E%0A");
+}
+
+.header-sunmoon:before {
+    background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg enable-background='new 0 0 512 512' version='1.1' viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg' xmlns:cc='http://creativecommons.org/ns%23' xmlns:dc='http://purl.org/dc/elements/1.1/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns%23'%3E%3Cmetadata%3E%3Crdf:RDF%3E%3Ccc:Work rdf:about=''%3E%3Cdc:format%3Eimage/svg+xml%3C/dc:format%3E%3Cdc:type rdf:resource='http://purl.org/dc/dcmitype/StillImage'/%3E%3Cdc:title/%3E%3C/cc:Work%3E%3C/rdf:RDF%3E%3C/metadata%3E%3Cg stroke-width='1.0016'%3E%3Cg stroke-width='1.0016'%3E%3Cpath d='m378.14 348.39c-252.09-232.26-126.05-116.13 0 0zm0 0c-7.1013 1.0206-14.356 1.5606-21.734 1.5606-11.372 0-22.453-1.266-33.121-3.6445-18.711 14.231-42.032 22.695-67.285 22.695-61.4 0-111.4-50-111.4-111.4 0-45.003 26.863-83.878 65.385-101.43 5.1014-17.928 13.42-34.516 24.282-49.105-73.647 10.585-130.47 74.117-130.47 150.64 0 83.9 68.299 152.2 152.2 152.2 49.952 0 94.37-24.213 122.14-61.512zm-168.16-192.22c-3.7624 13.222-5.7774 27.172-5.7774 41.582 0 72.528 51.043 133.39 119.08 148.56 13.047-9.9232 23.848-22.651 31.498-37.277-60.655-0.87309-109.78-50.522-109.78-111.38 0-18.537 4.5628-36.031 12.615-51.428-16.573 0.47651-34.61 4.1326-47.639 9.9453z' stroke-width='1.0016'/%3E%3C/g%3E%3C/g%3E%3Cpath d='m234.27 107.06c25.731-4.1098 31.26 21.424 23.357 39.16l-47.639 9.9453 1.1773-23.95z'/%3E%3Cpath d='m323.29 346.3 31.498-37.277c20.564-0.27099 34.635 24.786 23.357 39.361l-31.006 12.837z'/%3E%3C/svg%3E%0A");
+}
+
+html[data-theme='dark'] .header-sunmoon:before {
+    background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3C!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'%3E%3Csvg enable-background='new 0 0 512 512' version='1.1' viewBox='0 0 512 512' fill='white' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m256 105.5c-83.9 0-152.2 68.3-152.2 152.2s68.3 152.2 152.2 152.2 152.2-68.3 152.2-152.2c0-84-68.3-152.2-152.2-152.2zm0 263.5c-61.4 0-111.4-50-111.4-111.4s50-111.4 111.4-111.4 111.4 50 111.4 111.4-50 111.4-111.4 111.4z'/%3E%3Cpath d='m256 74.8c11.3 0 20.4-9.1 20.4-20.4v-23c0-11.3-9.1-20.4-20.4-20.4s-20.4 9.1-20.4 20.4v23c2.8422e-14 11.3 9.1 20.4 20.4 20.4z'/%3E%3Cpath d='m256 437.2c-11.3 0-20.4 9.1-20.4 20.4v22.9c0 11.3 9.1 20.4 20.4 20.4s20.4-9.1 20.4-20.4v-22.9c0-11.2-9.1-20.4-20.4-20.4z'/%3E%3Cpath d='m480.6 235.6h-23c-11.3 0-20.4 9.1-20.4 20.4s9.1 20.4 20.4 20.4h23c11.3 0 20.4-9.1 20.4-20.4s-9.1-20.4-20.4-20.4z'/%3E%3Cpath d='m54.4 235.6h-23c-11.3 0-20.4 9.1-20.4 20.4s9.1 20.4 20.4 20.4h22.9c11.3 0 20.4-9.1 20.4-20.4 0.1-11.3-9.1-20.4-20.3-20.4z'/%3E%3Cpath d='m400.4 82.8-16.3 16.2c-8 8-8 20.9 0 28.9s20.9 8 28.9 0l16.2-16.2c8-8 8-20.9 0-28.9s-20.9-8-28.8 0z'/%3E%3Cpath d='m99 384.1-16.2 16.2c-8 8-8 20.9 0 28.9s20.9 8 28.9 0l16.2-16.2c8-8 8-20.9 0-28.9s-20.9-7.9-28.9 0z'/%3E%3Cpath d='m413 384.1c-8-8-20.9-8-28.9 0s-8 20.9 0 28.9l16.2 16.2c8 8 20.9 8 28.9 0s8-20.9 0-28.9l-16.2-16.2z'/%3E%3Cpath d='m99 127.9c8 8 20.9 8 28.9 0s8-20.9 0-28.9l-16.2-16.2c-8-8-20.9-8-28.9 0s-8 20.9 0 28.9l16.2 16.2z'/%3E%3C/svg%3E%0A");
 }

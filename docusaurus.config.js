@@ -35,6 +35,7 @@ module.exports = {
           className: ["header-github", "header-logo"],
         },
       ],
+      hideOnScroll: false,
     },
     footer: {
       style: "light",
