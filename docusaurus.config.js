@@ -13,26 +13,26 @@ module.exports = {
         alt: "Pic of me",
         src: "img/edward.png",
       },
-      links: [
+      items: [
         {
           href: "https://www.linkedin.com/in/edward-mcfarlane-b5493375/",
           position: "right",
-          className: ["header-linkedin", "header-logo"],
+          className: "header-linkedin header-logo",
         },
         {
           href: "https://twitter.com/EdwardMcFarlane",
           position: "right",
-          className: ["header-twitter", "header-logo"],
+          className: "header-twitter header-logo",
         },
         {
           href: "https://www.instagram.com/edwardmcfarlane/",
           position: "right",
-          className: ["header-instagram", "header-logo"],
+          className: "header-instagram header-logo",
         },
         {
           href: "https://github.com/emcfarlane",
           position: "right",
-          className: ["header-github", "header-logo"],
+          className: "header-github header-logo",
         },
       ],
       hideOnScroll: false,
@@ -48,6 +48,10 @@ module.exports = {
       {
         blog: {
           path: "blog",
+          feedOptions: {
+            type: "all",
+            copyright: `Copyright © ${new Date().getFullYear()} Facebook, Inc.`,
+          },
           routeBasePath: "/",
           showReadingTime: true,
           editUrl:
