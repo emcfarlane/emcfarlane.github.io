@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <channel>
+        <title>Edward McFarlane Blog</title>
+        <link>https://emcfarlane.github.io/</link>
+        <description>Edward McFarlane Blog</description>
+        <lastBuildDate>Sun, 01 Mar 2020 00:00:00 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <copyright>Copyright © 2020 Facebook, Inc.</copyright>
+        <item>
+            <title><![CDATA[Rust on a Beaglebone Blue]]></title>
+            <link>https://emcfarlane.github.io/rustc</link>
+            <guid>rustc</guid>
+            <pubDate>Sun, 01 Mar 2020 00:00:00 GMT</pubDate>
+            <description><![CDATA[Beaglebone Blue is an all-in-one linux computer for robotics. Based on the Beaglebone Black with specific integrations for robotics its the perfect dev board. In this post we wrap the extensive C libraries available to make them callable from Rust.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[📚 Books]]></title>
+            <link>https://emcfarlane.github.io/books</link>
+            <guid>books</guid>
+            <pubDate>Sun, 02 Feb 2020 00:00:00 GMT</pubDate>
+            <description><![CDATA[My library of books to read.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Hello, world!]]></title>
+            <link>https://emcfarlane.github.io/hello</link>
+            <guid>hello</guid>
+            <pubDate>Sat, 01 Feb 2020 00:00:00 GMT</pubDate>
+            <description><![CDATA[I'm Edward McFarlane an engineer. Please get in touch at emcfarlane000@HEYYYYYgmail.com.]]></description>
+        </item>
+    </channel>
+</rss>
