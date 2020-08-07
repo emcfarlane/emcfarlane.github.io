@@ -4,10 +4,17 @@
         <title>Edward McFarlane Blog</title>
         <link>https://emcfarlane.github.io/</link>
         <description>Edward McFarlane Blog</description>
-        <lastBuildDate>Sun, 01 Mar 2020 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 06 Aug 2020 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <copyright>Copyright © 2020 Facebook, Inc.</copyright>
+        <item>
+            <title><![CDATA[An iPad with Tailscale]]></title>
+            <link>https://emcfarlane.github.io/ipad-dev</link>
+            <guid>ipad-dev</guid>
+            <pubDate>Thu, 06 Aug 2020 00:00:00 GMT</pubDate>
+            <description><![CDATA[Apple is switching their entire lineup to ARM processors so soon all our dev machines will be super little RISC processors. I've been doing this already, thanks to an iPad Pro with some internet connection it has become my go-to mobile machine. Now with tailscale it's almost usable!]]></description>
+        </item>
         <item>
             <title><![CDATA[Rust on a Beaglebone Blue]]></title>
             <link>https://emcfarlane.github.io/rustc</link>

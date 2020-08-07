@@ -2,12 +2,19 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://emcfarlane.github.io/</id>
     <title>Edward McFarlane Blog</title>
-    <updated>2020-03-01T00:00:00.000Z</updated>
+    <updated>2020-08-06T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://emcfarlane.github.io/"/>
     <subtitle>Edward McFarlane Blog</subtitle>
     <icon>https://emcfarlane.github.io/img/favicon.ico</icon>
     <rights>Copyright © 2020 Facebook, Inc.</rights>
+    <entry>
+        <title type="html"><![CDATA[An iPad with Tailscale]]></title>
+        <id>ipad-dev</id>
+        <link href="https://emcfarlane.github.io/ipad-dev"/>
+        <updated>2020-08-06T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Apple is switching their entire lineup to ARM processors so soon all our dev machines will be super little RISC processors. I've been doing this already, thanks to an iPad Pro with some internet connection it has become my go-to mobile machine. Now with tailscale it's almost usable!]]></summary>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Rust on a Beaglebone Blue]]></title>
         <id>rustc</id>
