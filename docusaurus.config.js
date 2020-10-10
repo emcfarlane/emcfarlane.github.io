@@ -46,8 +46,10 @@ module.exports = {
     [
       "@docusaurus/preset-classic",
       {
+        docs: false,
+        pages: false,
         blog: {
-          path: "blog",
+          path: "./blog",
           feedOptions: {
             type: "all",
             copyright: `Copyright © ${new Date().getFullYear()} Facebook, Inc.`,
@@ -56,6 +58,11 @@ module.exports = {
           showReadingTime: true,
           editUrl:
             "https://github.com/emcfarlane/emcfarlane.github.io/edit/master/",
+          blogDescription: "Personal blog for Edward McFarlane",
+          feedOptions: {
+            type: "all",
+            copyright: `Copyright © ${new Date().getFullYear()} Edward McFarlane.`,
+          },
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
