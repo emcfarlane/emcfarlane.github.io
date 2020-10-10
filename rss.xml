@@ -7,7 +7,7 @@
         <lastBuildDate>Thu, 06 Aug 2020 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
-        <copyright>Copyright © 2020 Facebook, Inc.</copyright>
+        <copyright>Copyright © 2020 Edward McFarlane.</copyright>
         <item>
             <title><![CDATA[An iPad with Tailscale]]></title>
             <link>https://emcfarlane.github.io/ipad-dev</link>
