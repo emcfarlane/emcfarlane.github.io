@@ -7,7 +7,7 @@
     <link rel="alternate" href="https://emcfarlane.github.io/"/>
     <subtitle>Edward McFarlane Blog</subtitle>
     <icon>https://emcfarlane.github.io/img/favicon.ico</icon>
-    <rights>Copyright © 2020 Edward McFarlane.</rights>
+    <rights>Copyright © 2021 Edward McFarlane.</rights>
     <entry>
         <title type="html"><![CDATA[An iPad with Tailscale]]></title>
         <id>ipad-dev</id>
