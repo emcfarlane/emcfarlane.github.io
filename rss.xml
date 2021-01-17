@@ -4,10 +4,17 @@
         <title>Edward McFarlane Blog</title>
         <link>https://emcfarlane.github.io/</link>
         <description>Edward McFarlane Blog</description>
-        <lastBuildDate>Thu, 06 Aug 2020 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 14 Dec 2020 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <copyright>Copyright © 2021 Edward McFarlane.</copyright>
+        <item>
+            <title><![CDATA[Cyclic/Collective Pitch Mixing]]></title>
+            <link>https://emcfarlane.github.io/swash-plate</link>
+            <guid>swash-plate</guid>
+            <pubDate>Mon, 14 Dec 2020 00:00:00 GMT</pubDate>
+            <description><![CDATA[A swash plate is a vital part of a helicopter that controls the pitch of the blades as it rotates.]]></description>
+        </item>
         <item>
             <title><![CDATA[An iPad with Tailscale]]></title>
             <link>https://emcfarlane.github.io/ipad-dev</link>
