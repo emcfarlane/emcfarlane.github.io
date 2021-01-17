@@ -63,6 +63,8 @@ module.exports = {
             type: "all",
             copyright: `Copyright © ${new Date().getFullYear()} Edward McFarlane.`,
           },
+          remarkPlugins: [require("remark-math")],
+          rehypePlugins: [[require("rehype-katex"), { strict: false }]],
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
@@ -70,4 +72,5 @@ module.exports = {
       },
     ],
   ],
+  stylesheets: ["https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"],
 };
