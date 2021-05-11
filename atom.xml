@@ -2,12 +2,19 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://emcfarlane.github.io/</id>
     <title>Edward McFarlane Blog</title>
-    <updated>2020-12-14T00:00:00.000Z</updated>
+    <updated>2021-05-01T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://emcfarlane.github.io/"/>
     <subtitle>Edward McFarlane Blog</subtitle>
     <icon>https://emcfarlane.github.io/img/favicon.ico</icon>
     <rights>Copyright © 2021 Edward McFarlane.</rights>
+    <entry>
+        <title type="html"><![CDATA[Goldfish Memory]]></title>
+        <id>goldfish</id>
+        <link href="https://emcfarlane.github.io/goldfish"/>
+        <updated>2021-05-01T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[It's live goldfish.dev and almost usable!]]></summary>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Cyclic/Collective Pitch Mixing]]></title>
         <id>swash-plate</id>

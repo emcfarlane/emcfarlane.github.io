@@ -4,10 +4,17 @@
         <title>Edward McFarlane Blog</title>
         <link>https://emcfarlane.github.io/</link>
         <description>Edward McFarlane Blog</description>
-        <lastBuildDate>Mon, 14 Dec 2020 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Sat, 01 May 2021 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <copyright>Copyright © 2021 Edward McFarlane.</copyright>
+        <item>
+            <title><![CDATA[Goldfish Memory]]></title>
+            <link>https://emcfarlane.github.io/goldfish</link>
+            <guid>goldfish</guid>
+            <pubDate>Sat, 01 May 2021 00:00:00 GMT</pubDate>
+            <description><![CDATA[It's live goldfish.dev and almost usable!]]></description>
+        </item>
         <item>
             <title><![CDATA[Cyclic/Collective Pitch Mixing]]></title>
             <link>https://emcfarlane.github.io/swash-plate</link>
