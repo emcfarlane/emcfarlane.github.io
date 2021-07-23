@@ -4,10 +4,17 @@
         <title>Edward McFarlane Blog</title>
         <link>https://emcfarlane.github.io/</link>
         <description>Edward McFarlane Blog</description>
-        <lastBuildDate>Sat, 01 May 2021 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 01 Jun 2021 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <copyright>Copyright © 2021 Edward McFarlane.</copyright>
+        <item>
+            <title><![CDATA[A Web App Framework]]></title>
+            <link>https://emcfarlane.github.io/webapps</link>
+            <guid>webapps</guid>
+            <pubDate>Tue, 01 Jun 2021 00:00:00 GMT</pubDate>
+            <description><![CDATA[This is documentation, for me essentially, on how to deploy a web application.]]></description>
+        </item>
         <item>
             <title><![CDATA[Goldfish Memory]]></title>
             <link>https://emcfarlane.github.io/goldfish</link>
