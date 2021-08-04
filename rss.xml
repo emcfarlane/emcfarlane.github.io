@@ -4,10 +4,17 @@
         <title>Edward McFarlane Blog</title>
         <link>https://emcfarlane.github.io/</link>
         <description>Edward McFarlane Blog</description>
-        <lastBuildDate>Tue, 01 Jun 2021 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 01 Aug 2021 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <copyright>Copyright © 2021 Edward McFarlane.</copyright>
+        <item>
+            <title><![CDATA[SQLite Search]]></title>
+            <link>https://emcfarlane.github.io/sqlitex</link>
+            <guid>sqlitex</guid>
+            <pubDate>Sun, 01 Aug 2021 00:00:00 GMT</pubDate>
+            <description><![CDATA[For many projects FTS is now a requirement.]]></description>
+        </item>
         <item>
             <title><![CDATA[A Web App Framework]]></title>
             <link>https://emcfarlane.github.io/webapps</link>

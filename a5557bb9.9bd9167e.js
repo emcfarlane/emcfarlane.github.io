@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[18],{81:function(o){o.exports=JSON.parse('{"permalink":"/","page":1,"postsPerPage":10,"totalPages":1,"totalCount":7,"previousPage":null,"nextPage":null,"blogDescription":"Personal blog for Edward McFarlane","blogTitle":"Blog"}')}}]);
